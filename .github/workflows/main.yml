@@ -1,0 +1,44 @@
+name: Build GUI (multiplataforma)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: windows-latest
+          - platform: macos-latest
+          - platform: ubuntu-22.04
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar toolchain de Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: Instalar dependencias de sistema (solo Linux)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Compilar y empaquetar la app
+        uses: tauri-apps/tauri-action@v0
+        with:
+          projectPath: apps/tauri-app
+          tagName: mikit-v__VERSION__
+          releaseName: "mikit v__VERSION__"
+          releaseDraft: true
+          prerelease: false
