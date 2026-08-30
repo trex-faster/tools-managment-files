@@ -18,7 +18,7 @@ apps/tauri-app/src-tauri/Cargo.lock
 # Iconos placeholder generados localmente para poder compilar en dev.
 # Reemplazar por un ícono real antes de distribuir, y en ese momento
 # quitar esta línea para versionarlo de verdad.
-apps/tauri-app/src-tauri/icons/icon.ico
+# apps/tauri-app/src-tauri/icons/icon.ico
 
 # --- Archivos de prueba locales ---
 # Carpeta usada para probar batch_extract a mano; no debe subirse.
