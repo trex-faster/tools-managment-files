@@ -1,0 +1,43 @@
+{
+  "build": {
+    "beforeDevCommand": "",
+    "beforeBuildCommand": "",
+    "devPath": "../dist",
+    "distDir": "../dist",
+    "withGlobalTauri": true
+  },
+  "package": {
+    "productName": "mikit",
+    "version": "0.1.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "dialog": {
+        "open": true
+      },
+      "shell": {
+        "open": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "identifier": "com.mikit.app",
+      "icon": [
+        "icons/icon.ico"
+      ],
+      "targets": ["msi", "deb", "appimage"]
+    },
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "title": "mikit",
+        "width": 720,
+        "height": 480,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ]
+  }
+}

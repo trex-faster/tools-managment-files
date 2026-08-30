@@ -1,0 +1,87 @@
+# mi-kit
+
+Cascarón del workspace. Nada está implementado todavía — cada función
+de plataforma tiene un `todo!()` a propósito, así el proyecto compila
+pero avisa claramente qué falta.
+
+## Estructura
+
+```
+mi-kit/
+├── Cargo.toml
+├── .cargo/config.toml     # alias: cargo xtask
+├── crates/                # librerías reutilizables, sin binario propio
+│   ├── core/              # tipos y errores compartidos, no depende de nadie
+│   ├── fs-tools/          # archivos y carpetas
+│   ├── net-tools/         # red (sockets, conexiones)
+│   └── firewall/          # reglas de firewall (privilegios elevados)
+├── apps/                  # binarios que consumen los crates de arriba
+│   └── cli/               # binario `mikit`
+│       └── src/
+│           ├── main.rs        # solo arranca todo, sin lógica
+│           ├── cli.rs         # struct Cli + enum Commands (clap)
+│           ├── config.rs      # config persistente del usuario
+│           ├── output.rs      # formato de salida (text/json)
+│           └── commands/      # un archivo por comando
+│               ├── mod.rs     # enrutador: Commands -> función
+│               ├── caps.rs
+│               ├── ls.rs
+│               ├── conns.rs
+│               └── fw.rs
+├── xtask/                 # automatización: cargo xtask build/test/release
+└── .github/workflows/     # CI en Windows y Linux en cada push
+```
+
+## Regla de oro al agregar módulos nuevos
+
+- Nuevo dominio funcional (procesos, registro de Windows, auditoría, etc.)
+  → nuevo crate en `crates/`, con la MISMA plantilla interna que ya usan
+  `fs-tools`/`net-tools`/`firewall`: `lib.rs` + `error.rs` + `windows.rs` + `linux.rs`.
+- Un crate existente creciendo mucho por dentro → se subdivide en
+  submódulos internos (`fs-tools/src/linux/permissions.rs`, etc.),
+  NO se convierte en un crate nuevo.
+- Nunca dependencias entre crates hermanos (`fs-tools` no depende de
+  `net-tools` ni viceversa). Todo lo compartido sube a `core`.
+- Un nuevo binario/GUI (ej. la app de Tauri) → va en `apps/`, no en `crates/`.
+
+## Patrón para agregar un comando nuevo al CLI
+
+1. Agrega la variante en `cli.rs` (`enum Commands`).
+2. Crea `commands/nuevo_comando.rs` con su función `run(...)`.
+3. Regístralo en `commands/mod.rs` (mod + match).
+Nunca metas la lógica directo en `main.rs` ni en `commands/mod.rs`.
+
+## Patrón para subdividir un módulo de plataforma (linux.rs/windows.rs)
+
+Cuando un archivo como `linux.rs` crece mucho, se convierte en carpeta:
+```
+linux.rs           →    linux/
+                            ├── mod.rs       (reexporta y arma list_dir)
+                            └── metadata.rs  (una responsabilidad concreta)
+```
+`fs-tools` ya sigue este patrón como referencia (ver `linux/metadata.rs`
+y `windows/metadata.rs`). Repite esto en `net-tools`/`firewall` cuando
+les toque crecer — no antes, para no sobre-diseñar código que no existe.
+
+## Orden sugerido de implementación
+
+1. `crates/core/capabilities.rs` — detección real de admin/root por SO.
+2. `crates/fs-tools` — el más simple, no necesita privilegios.
+3. `crates/net-tools` — necesita permisos parciales según la operación.
+4. `crates/firewall` — el más delicado, dejar para el final.
+
+## Comandos útiles
+
+```bash
+cargo xtask build             # compila todo (vía xtask)
+cargo xtask test              # corre tests de todos los crates
+cargo build --workspace       # equivalente directo sin xtask
+cargo run -p cli -- caps      # ver capacidades detectadas
+cargo run -p cli -- ls .      # listar carpeta (fs-tools)
+```
+
+## Nota sobre `todo!()`
+
+Las funciones con `todo!()` compilan pero hacen panic si se llaman.
+Es intencional para este esqueleto: el objetivo es que el workspace
+completo compile en ambos SO vía CI antes de implementar nada real.

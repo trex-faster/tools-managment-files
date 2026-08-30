@@ -1,0 +1,10 @@
+[package]
+name = "fs-tools"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+mikit-core.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+serde.workspace = true

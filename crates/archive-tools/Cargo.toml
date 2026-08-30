@@ -1,0 +1,17 @@
+[package]
+name = "archive-tools"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+mikit-core.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+zip = { version = "0.6", default-features = false, features = ["deflate"] }
+ureq = { version = "=2.9.7", default-features = false, features = ["native-tls"] }
+native-tls = "=0.2.11"
+url = "=2.4.1"
+regex = "1"
+
+[dev-dependencies]
+tempfile = "=3.10.1"

@@ -1,0 +1,30 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/core",
+    "crates/fs-tools",
+    "crates/net-tools",
+    "crates/firewall",
+    "crates/archive-tools",
+    "apps/cli",
+    "apps/tauri-app/src-tauri",
+    "xtask",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+[workspace.dependencies]
+thiserror = "1"
+tracing = "0.1"
+tracing-subscriber = "0.3"
+serde = { version = "1", features = ["derive"] }
+clap = { version = "4", features = ["derive"] }
+
+# crates internos, referenciados por path
+mikit-core = { path = "crates/core" }
+fs-tools = { path = "crates/fs-tools" }
+net-tools = { path = "crates/net-tools" }
+firewall = { path = "crates/firewall" }
+archive-tools = { path = "crates/archive-tools" }

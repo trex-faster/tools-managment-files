@@ -1,0 +1,18 @@
+[package]
+name = "cli"
+version.workspace = true
+edition.workspace = true
+
+[[bin]]
+name = "mikit"
+path = "src/main.rs"
+
+[dependencies]
+mikit-core.workspace = true
+fs-tools.workspace = true
+net-tools.workspace = true
+firewall.workspace = true
+archive-tools.workspace = true
+clap.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

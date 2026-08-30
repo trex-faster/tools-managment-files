@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>mikit</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #1e1e1e;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 24px;
+    }
+    h1 { font-size: 18px; margin-bottom: 4px; }
+    p.subtitle { color: #888; margin-top: 0; font-size: 13px; }
+
+    #dropzone {
+      border: 2px dashed #555;
+      border-radius: 8px;
+      padding: 40px 20px;
+      text-align: center;
+      color: #aaa;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    #dropzone.dragover {
+      border-color: #4caf50;
+      background: #2a2a2a;
+    }
+
+    #file-list {
+      margin-top: 16px;
+      font-size: 13px;
+    }
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-bottom: 1px solid #333;
+    }
+    .ok   { color: #4caf50; }
+    .fail { color: #e57373; }
+
+    #summary {
+      margin-top: 12px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>mikit — extracción por lotes</h1>
+  <p class="subtitle">Arrastra varios .zip / .rar aquí. Cada uno se extrae a su propia carpeta.</p>
+
+  <div id="dropzone">Suelta los archivos aquí, o haz clic para elegirlos</div>
+
+  <div id="file-list"></div>
+  <div id="summary"></div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

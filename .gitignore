@@ -1,0 +1,39 @@
+.cargo/
+# --- Rust / Cargo ---
+/target
+**/target
+Cargo.lock
+
+# Nota: Cargo.lock normalmente SÍ se versiona en binarios finales para
+# builds reproducibles. Aquí lo ignoramos porque el proyecto todavía
+# está en cascarón/desarrollo temprano y cambia mucho. Revisar esta
+# decisión cuando el proyecto esté más maduro.
+
+# --- Tauri / frontend ---
+apps/tauri-app/src-tauri/target
+apps/tauri-app/dist/dist
+node_modules/
+apps/tauri-app/src-tauri/Cargo.lock
+
+# Iconos placeholder generados localmente para poder compilar en dev.
+# Reemplazar por un ícono real antes de distribuir, y en ese momento
+# quitar esta línea para versionarlo de verdad.
+apps/tauri-app/src-tauri/icons/icon.ico
+
+# --- Archivos de prueba locales ---
+# Carpeta usada para probar batch_extract a mano; no debe subirse.
+/pruebas/
+
+# --- Editor / IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- Sistema operativo ---
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Logs y temporales ---
+*.log
+*.tmp
