@@ -1,0 +1,11 @@
+.app {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  height: 100%;
+}
+
+.content {
+  min-width: 0;
+  overflow: auto;
+  padding: 24px;
+}

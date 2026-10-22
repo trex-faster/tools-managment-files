@@ -1,0 +1,39 @@
+.button {
+  padding: 7px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  background: var(--bg-raised);
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--text-dim);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0d1f0e;
+  font-weight: 600;
+}
+
+.primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  border-color: var(--accent);
+}
+
+.danger {
+  border-color: var(--fail);
+  color: var(--fail);
+}
+
+.secondary {
+  /* estilo base */
+}
