@@ -1,0 +1,22 @@
+.control {
+  width: 100%;
+  padding: 6px 9px;
+  background: var(--bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.control:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.control:disabled {
+  opacity: 0.6;
+}
+
+.control[aria-invalid="true"] {
+  border-color: var(--fail);
+}

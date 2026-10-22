@@ -1,0 +1,36 @@
+.list {
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ok {
+  color: var(--ok);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.fail {
+  color: var(--fail);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.summary {
+  margin: 12px 0 0;
+  font-weight: bold;
+}
